@@ -12,7 +12,7 @@ const className = Astro.props.class;
 
 let links: NavBarLink[] = navBarConfig.links.map((item: NavBarLink | LinkPreset): NavBarLink => {
     if (typeof item === "number") {
-        return LinkPresets[item]
+        return LinkPresets[item] //todo when  this used?
     }
     return item;
 });

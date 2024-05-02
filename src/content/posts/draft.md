@@ -1,22 +1,14 @@
 ---
-title: Draft Example
-published: 2022-07-01
-tags: [Markdown, Blogging, Demo]
-category: Examples
+title: Ahiru Shop
+published: 2023-07-09
+description: MERN stack harvest market application done for practicing the basics of the MERN stack, Styled Components, and simple but cute animations with CSS. Also done using my own created icons.
+image: "./img/ahirushop.png"
+tags: [Done]
+category: Projects
 draft: true
 ---
 
-# This Article is a Draft
+# A cute and simple harvest market app
 
-This article is currently in a draft state and is not published. Therefore, it will not be visible to the general audience. The content is still a work in progress and may require further editing and review.
+A simple and cute application, but it was quite difficult to finish nonetheless. Also did some translations for self-studying as well.
 
-When the article is ready for publication, you can update the "draft" field to "false" in the Frontmatter:
-
-```markdown
----
-title: Draft Example
-published: 2024-01-11T04:40:26.381Z
-tags: [Markdown, Blogging, Demo]
-category: Examples
-draft: false
----
