@@ -1,14 +1,12 @@
 <h2>Notes</h2>
 
+#### Vercel integration
+- on main branch
 #### Directus integration
+- on directus branch 
 
-- [code fetching from directus](https://github.com/erstinn/fuwari-portfolio/blob/main/src/utils/portfolio-data-utils.ts)
-- [code displaying the fetched directus data](https://github.com/erstinn/fuwari-portfolio/blob/main/src/pages/about.astro)
-- as directus is only local, when locally deployed the data it would be fetch would be under [About] displaying :
-  ![img_1.png](img_1.png)
-
-- on vercel only: 
-  ![img.png](img.png)
+[//]: # (- [code fetching from directus]&#40;https://github.com/erstinn/fuwari-portfolio/blob/main/src/utils/portfolio-data-utils.ts&#41;)
+[//]: # (- [code displaying the fetched directus data]&#40;https://github.com/erstinn/fuwari-portfolio/blob/main/src/pages/about.astro&#41;)
 
 
 <h3>References</h3>

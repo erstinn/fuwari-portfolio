@@ -2,8 +2,9 @@
 import { getHobbies } from "../utils/portfolio-data-utils";
 
 const mode = 'prod' ; //TODO: NOTE: change if you want to see directus local retrieval; kept simple and didn't use .env or conf files
+let hobbies;
 if (mode === 'dev')
-    const hobbies = await getHobbies();
+    hobbies = await getHobbies();
 
 ---
 <div>
