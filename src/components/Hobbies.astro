@@ -1,0 +1,17 @@
+---
+import { getHobbies } from "../utils/portfolio-data-utils";
+
+const hobbies = await getHobbies();
+---
+<div>
+    <h4>TLDR of my hobbies (retrieved from backend through local Directus)</h4>
+    <ul>
+        {
+            hobbies.map(hobby => (
+                <li key={hobby.id}>
+                    {hobby.title} {hobby.description === "NULL" ? '' : `- ${hobby.description}`}
+                </li>
+            ))
+        }
+    </ul>
+</div>
