@@ -27,6 +27,9 @@ const oklchToHex = str => {
 // https://astro.build/config
 export default defineConfig({
   site: "https://fuwari.vercel.app/",
+  env: {
+    ENV_MODE: "production",
+  },
   base: "/",
   trailingSlash: "always",
   integrations: [tailwind(), vue({
