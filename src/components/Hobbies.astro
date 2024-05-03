@@ -2,16 +2,24 @@
 import { getHobbies } from "../utils/portfolio-data-utils";
 
 const hobbies = await getHobbies();
+const mode = 'prod' ; //TODO: NOTE: change if you want to see directus local retrieval; kept simple and didn't use .env or conf files
+
 ---
 <div>
-    <h4>TLDR of my hobbies (retrieved from backend through local Directus)</h4>
-    <ul>
-        {
-            hobbies.map(hobby => (
-                <li key={hobby.id}>
-                    {hobby.title} {hobby.description === "NULL" ? '' : `- ${hobby.description}`}
-                </li>
-            ))
-        }
-    </ul>
+    {
+        mode === 'dev' ?
+            <h4>TLDR of my hobbies (retrieved from backend through local Directus)</h4>
+            <ul>
+                {
+                    hobbies.map(hobby => (
+                            <li key={hobby.id}>
+                                {hobby.title} {hobby.description === "NULL" ? '' : `- ${hobby.description}`}
+                            </li>
+                    ))
+                }
+            </ul>
+            :
+            ''
+    }
+
 </div>
