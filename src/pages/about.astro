@@ -6,12 +6,10 @@ import { getEntry } from 'astro:content'
 import {i18n} from "../i18n/translation";
 import I18nKey from "../i18n/i18nKey";
 import Markdown from "@components/misc/Markdown.astro";
-import Hobbies from "@components/Hobbies.astro";
 
 const aboutPost = await getEntry('spec', 'about')
 
 const { Content } = await aboutPost.render()
-const mode = 'prod' ; //TODO: NOTE: change if you want to see directus local retrieval; kept simple and didn't use .env or conf files
 ---
 
 <MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
@@ -22,14 +20,4 @@ const mode = 'prod' ; //TODO: NOTE: change if you want to see directus local ret
             </Markdown>
         </div>
     </div>
-
-    {mode === 'development' && (
-            <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mt-4">
-                <div class="card-base z-10 px-9 py-6 relative w-full ">
-                    <Markdown class="mt-2">
-                        <Hobbies/>
-                    </Markdown>
-                </div>
-            </div>
-    )}
 </MainGridLayout>
