@@ -55,12 +55,11 @@ export async function getHobbies(): Promise<Hobbies[]> {
     return hobbies;
 }
 
-// TODO graphQL for these
-// export async function getProjects(): Promise<Projects[]> {
-//
-//     return
-// }
-// export async function getMe(): Promise<Me[]> {
-//
-//     return
-// }
+export async function getProjects(): Promise<Projects[]> {
+    
+    return
+}
+export async function getMe(): Promise<Me[]> {
+
+    return
+}
