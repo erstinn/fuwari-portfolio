@@ -25,10 +25,11 @@ interface Hobbies  {
     description: string | null;
 }
 
-type Projects = { //todo interface vs type
+interface Projects = { //todo interface vs type
+    id: number;
     title: string;
     description: string;
-    tech_stacks: [];
+    tech_stacks: TechStacks[];
     url: string;
     status: boolean;
 }
@@ -37,6 +38,13 @@ interface TechStacks {
     id: number; //todo maybe remove
     title: string;
     description: string | null;
+}
+
+// join in frontend
+interface ProjectTechStack {
+    Projects_id: number;
+    Tech_Stacks_id: number;
+    Tech_Stacks: TechStacks[]; //todo maybe remove
 }
 
 interface Me {
@@ -60,6 +68,7 @@ interface Books {
     genre: [];
     author: Authors;
     published_date: Date; //GET YEAR ONLY
+
 }
 
 
@@ -90,10 +99,19 @@ async function getAuthors(): Promise<Authors[]> {
 export async function getBooks(): Promise<Books[]> {
     const authors = await getAuthors();
     let books: Books[] = [];
-    const result = await client.request(readItems('Books'));
-    books = result.map((data) => ({
+    // const bookAuthorRes = await client.request(readItems('Projects_Tech_Stacks'))
+    // const bookAuthor: {Projects_id: number, Tech_Stacks_id: number} = bookAuthorRes.map((data) => ({
+    //     ...,
+    //     Projects_id: data.Projects_id,
+    //     Tech_s
+    // }));
+    const booksRes = await client.request(readItems('Books'));
+    books = booksRes.map((data) => ({
         id: data.id,
         title: data.title,
+        genre: data.genre,
+        author:
+
         description: data.description
     }))
     console.log('books', books)
@@ -101,16 +119,33 @@ export async function getBooks(): Promise<Books[]> {
 
 }
 
+async function getTechStacks(): Promise<TechStacks[]> {
+    let techstacks: TechStacks[];
+    const techstacksRes = await client.request(readItems('Tech_Stacks'));
+    techstacks = techstacksRes.map((data) => ({
+        id: data.id,
+        title: data.title,
+        description: data.description
+    }))
+    return techstacks;
+}
+
 export async function getProjects(): Promise<Projects[]> {
-    let projects: Projects[] = [];
-    const result = await client.request(readItems('Books'));
-    projects = result.map((data) => ({
+    const techstacks = await getTechStacks();
+    const ProjTechsRes = await client.request(readItems('Projects_Tech_Stacks'))
+    const projectTechStacks = ProjTechsRes.map((res) => ({
+        Projects_id: res.Projects_id,
+        Tech_Stacks: techstacks.map(tech => res.Tech_Stacks_id === tech.id)
+    }));
+    const result = await client.request(readItems('Projects'));
+    let projects: Projects[] = result.map((data) => ({
+        id: data.id,
         title: data.title,
         description: data.description,
-        tech_stacks: data.tech_stacks,
+        tech_stacks: projectTechStacks.filter(ts => ts.Projects_id === data.id).map(ts => ts.Tech_Stacks),
         url: data.url,
         status: data.status
-    }))
+    }));
     console.log('projects: ',  projects)
     return projects;
 }
