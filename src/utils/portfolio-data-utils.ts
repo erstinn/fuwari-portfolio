@@ -4,7 +4,7 @@ import {createDirectus, authentication,
     readItems} from "@directus/sdk";
 
 // TODO
-//  would usually put on .env, the URL for this but since it's on docker-compose:
+//  would usually put on .env, the URL for this but since it's on docker-compose anw:
 
 const apiURL = 'http://localhost:8055'
 const email = 'admin@example.com'
@@ -21,11 +21,13 @@ const client = await setupDirectusConnection(); //dont know if works outside; pr
 
 
 interface Hobbies  {
+    id: number;
     title: string;
     description: string | null;
+    // images: ;
 }
 
-interface Projects = { //todo interface vs type
+interface Projects { //todo interface vs type
     id: number;
     title: string;
     description: string;
@@ -65,9 +67,9 @@ interface Authors {
 interface Books {
     title: string;
     description: string | null;
-    genre: [];
-    author: Authors;
-    published_date: Date; //GET YEAR ONLY
+    genre: [] | null;
+    author: string | Authors;
+    year_published: Date | null; //GET YEAR ONLY
 
 }
 
@@ -98,21 +100,17 @@ async function getAuthors(): Promise<Authors[]> {
 
 export async function getBooks(): Promise<Books[]> {
     const authors = await getAuthors();
-    let books: Books[] = [];
-    // const bookAuthorRes = await client.request(readItems('Projects_Tech_Stacks'))
-    // const bookAuthor: {Projects_id: number, Tech_Stacks_id: number} = bookAuthorRes.map((data) => ({
-    //     ...,
-    //     Projects_id: data.Projects_id,
-    //     Tech_s
-    // }));
+
     const booksRes = await client.request(readItems('Books'));
-    books = booksRes.map((data) => ({
+    let books: Books[] = booksRes.map((data) => ({
         id: data.id,
         title: data.title,
-        genre: data.genre,
-        author:
-
-        description: data.description
+        description: data.description,
+        genre: data.genre, //todo
+        author: authors.filter(a => a.id === data.id)
+            .map(a => a.last_name !== null ? a.first_name + ' ' + a.last_name : a.first_name).toString(), //dno why need to toString
+            //assumes only one author per book
+        year_published: data.year_published || ''
     }))
     console.log('books', books)
     return books;
@@ -142,7 +140,8 @@ export async function getProjects(): Promise<Projects[]> {
         id: data.id,
         title: data.title,
         description: data.description,
-        tech_stacks: projectTechStacks.filter(ts => ts.Projects_id === data.id).map(ts => ts.Tech_Stacks),
+        tech_stacks: projectTechStacks.filter(ts => ts.Projects_id === data.id)
+            .map(ts => ts.Tech_Stacks),
         url: data.url,
         status: data.status
     }));
